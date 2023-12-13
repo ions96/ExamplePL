@@ -1,5 +1,5 @@
-import React, {useCallback, forwardRef, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useCallback, forwardRef, useState, useRef} from 'react';
+import {View, StyleSheet, TextInput as TextInputRn} from 'react-native';
 
 import BottomSheet, {
   BottomSheetBackdrop,
@@ -13,73 +13,103 @@ import Button from '@component/Button';
 import {useTheme} from '@theme';
 
 interface Props
-  extends Omit<BottomSheetProps, 'snapPoints' | 'children' | 'index'> {
-  onPressApply?: (item: any) => void;
-}
+  extends Omit<BottomSheetProps, 'snapPoints' | 'children' | 'index'> {}
 
-const BottomEditModal = forwardRef<BottomSheet, Props>(
-  ({onPressApply, ...props}, ref) => {
-    const theme = useTheme();
-    const [text, setText] = useState('');
+const BottomEditModal = forwardRef<BottomSheet, Props>(({...props}, ref) => {
+  const theme = useTheme();
+  const [errorEmail, setErrorEmail] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
-    const handlePress = () => {
-      // onSubmit(text);
-      setText(''); // Clear the text input after submission
-    };
+  const emailInputRef = useRef<TextInputRn>(null);
 
-    const onPressClose = useCallback(() => {
-      // @ts-ignore
-      ref.current?.close();
-    }, [ref]);
+  const onPressClose = useCallback(() => {
+    // @ts-ignore
+    ref.current?.close();
+  }, [ref]);
 
-    const renderBackdrop = useCallback(
-      (props_: BottomSheetBackdropProps) => (
-        <BottomSheetBackdrop
-          {...props_}
-          pressBehavior="close"
-          opacity={0.4}
-          disappearsOnIndex={-1}
+  const renderBackdrop = useCallback(
+    (props_: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props_}
+        pressBehavior="close"
+        opacity={0.4}
+        disappearsOnIndex={-1}
+      />
+    ),
+    [],
+  );
+
+  const isEmailValid = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailName = () => {
+    if (emailInputRef.current) {
+      emailInputRef.current.focus();
+    }
+  };
+
+  const handleSubmit = () => {
+    emailInputRef.current?.blur();
+    if (isEmailValid(email)) {
+      setErrorEmail('');
+    } else {
+      setErrorEmail('This email address is invalid');
+    }
+  };
+  return (
+    <BottomSheet
+      index={-1}
+      ref={ref}
+      snapPoints={['98%']}
+      enableOverDrag={false}
+      {...props}
+      handleStyle={styles.handle}
+      handleIndicatorStyle={{backgroundColor: theme.colors.white}}
+      backdropComponent={renderBackdrop}>
+      <Box backgroundColor="white">
+        <HeaderModal title={'Name & Email'} onPressClose={onPressClose} />
+      </Box>
+      <Box flex={1} padding="md" paddingTop={'lg'}>
+        <TextInput
+          placeholder="Enter name"
+          value={name}
+          title={'Name'}
+          keyboardType={'email-address'}
+          autoCapitalize="words"
+          returnKeyType="next"
+          onSubmitEditing={handleEmailName}
+          onChangeText={text => setName(text)}
         />
-      ),
-      [],
-    );
-
-    return (
-      <BottomSheet
-        index={-1}
-        ref={ref}
-        snapPoints={['98%']}
-        enableOverDrag={false}
-        {...props}
-        handleStyle={styles.handle}
-        handleIndicatorStyle={{backgroundColor: theme.colors.white}}
-        backdropComponent={renderBackdrop}>
-        <Box backgroundColor="white">
-          <HeaderModal title={'Name & Email'} onPressClose={onPressClose} />
-        </Box>
-        <Box flex={1} padding="md" paddingTop={'lg'}>
-          <TextInput
-            placeholder="Enter name"
-            value={text}
-            title={'Name'}
-            onChangeText={newText => setText(newText)}
+        <TextInput
+          ref={emailInputRef}
+          placeholder="Enter email"
+          value={email}
+          title={'Email'}
+          keyboardType={'email-address'}
+          error={errorEmail}
+          returnKeyType="send"
+          autoCapitalize="characters"
+          style={styles.secondInput}
+          onFocusParam={() => {
+            setErrorEmail('');
+          }}
+          onSubmitEditing={handleSubmit}
+          onChangeText={text => setEmail(text)}
+        />
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Submit"
+            onPress={handleSubmit}
+            disabled={!name || !email}
           />
-          <TextInput
-            placeholder="Enter email"
-            value={text}
-            title={'Email'}
-            error={'Invalid email'}
-            style={styles.secondInput}
-            onChangeText={newText => setText(newText)}
-          />
-          <View style={styles.buttonContainer}>
-            <Button title="Submit" onPress={handlePress} />
-          </View>
-        </Box>
-      </BottomSheet>
-    );
-  },
-);
+        </View>
+      </Box>
+    </BottomSheet>
+  );
+});
 export default BottomEditModal;
 
 const styles = StyleSheet.create({
