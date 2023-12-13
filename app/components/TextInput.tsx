@@ -9,10 +9,11 @@ import Text from './Text';
 export interface TextInputProps extends RNTextInputProps {
   title?: string;
   error?: string;
+  onFocusParam?: () => void;
 }
 
 export const TextInput = forwardRef<RNTextInput, TextInputProps>(
-  ({error, title, style, ...props}: TextInputProps, ref) => {
+  ({error, title, onFocusParam, style, ...props}: TextInputProps, ref) => {
     const [borderColor, setBorderColor] = useState('#C9CDD1');
     return (
       <>
@@ -26,6 +27,9 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(
           underlineColorAndroid={'rgba(0,0,0,0)'}
           multiline={false}
           onFocus={() => {
+            if (onFocusParam) {
+              onFocusParam();
+            }
             setBorderColor('#1677FF');
           }}
           onBlur={() => {
