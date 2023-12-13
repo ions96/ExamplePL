@@ -10,10 +10,11 @@ import RightIcon from '@icons/RightIcon';
 
 interface Props extends TouchableOpacityProps {
   title: string;
+  isSpecial?: boolean;
   Icon?: React.ElementType;
 }
 
-const ListMenuItem = ({title, Icon, style, ...props}: Props) => {
+const ListMenuItem = ({title, Icon, isSpecial, style, ...props}: Props) => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
@@ -25,7 +26,9 @@ const ListMenuItem = ({title, Icon, style, ...props}: Props) => {
             <Icon />
           </View>
         )}
-        <Text variant="regular15">{title}</Text>
+        <Text variant="regular15" color={isSpecial ? 'red' : 'secundaryblack'}>
+          {title}
+        </Text>
       </View>
 
       <RightIcon />
