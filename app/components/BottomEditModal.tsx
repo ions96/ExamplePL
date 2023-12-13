@@ -1,5 +1,5 @@
 import React, {useCallback, forwardRef, useState} from 'react';
-import {View, Button, StyleSheet, TextInput} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 import BottomSheet, {
   BottomSheetBackdrop,
@@ -8,6 +8,8 @@ import BottomSheet, {
 } from '@gorhom/bottom-sheet';
 import Box from '@component/Box';
 import HeaderModal from '@component/HeaderModal';
+import TextInput from '@component/TextInput';
+import Button from '@component/Button';
 import {useTheme} from '@theme';
 
 interface Props
@@ -57,10 +59,17 @@ const BottomEditModal = forwardRef<BottomSheet, Props>(
         </Box>
         <Box flex={1} padding="md" paddingTop={'lg'}>
           <TextInput
-            style={styles.input}
-            placeholder="Enter text"
+            placeholder="Enter name"
             value={text}
-            underlineColorAndroid="transparent"
+            title={'Name'}
+            onChangeText={newText => setText(newText)}
+          />
+          <TextInput
+            placeholder="Enter email"
+            value={text}
+            title={'Email'}
+            error={'Invalid email'}
+            style={styles.secondInput}
             onChangeText={newText => setText(newText)}
           />
           <View style={styles.buttonContainer}>
@@ -86,19 +95,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 8,
-    paddingRight: 8,
-    width: '100%',
-  },
   buttonContainer: {
     position: 'absolute',
     bottom: 16,
     left: 16,
     right: 16,
+  },
+  secondInput: {
+    marginTop: 24,
   },
 });
