@@ -101,7 +101,7 @@ const BottomEditModal = forwardRef<BottomSheet, Props>(({...props}, ref) => {
         />
         <View style={styles.buttonContainer}>
           <Button
-            title="Submit"
+            title="Save"
             onPress={handleSubmit}
             disabled={!name || !email}
           />

@@ -1,8 +1,8 @@
 import React, {useRef} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Container from '@component/Container';
+import Button from '@component/Button';
 import {useTranslation} from 'react-i18next';
-import Text from '@component/Text';
 import {RootStackParamList} from '@navigation/types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -16,14 +16,14 @@ export default function HomeScreen({navigation, route}: HomeScreenProps) {
   const editModal = useRef<BottomSheet>(null);
   return (
     <Container flex={1} bg="white" paddingHorizontal={'md'}>
-      <TouchableOpacity
-        onPress={() => {
-          menuModal.current?.collapse();
-        }}>
-        <Text variant="medium14" color={'black'} marginTop={'lg'}>
-          {t('t_app_Home')}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.primaryButton}>
+        <Button
+          title="Profil"
+          onPress={() => {
+            menuModal.current?.collapse();
+          }}
+        />
+      </View>
       <BottomMenuModal
         ref={menuModal}
         onPressApply={() => {
@@ -36,11 +36,5 @@ export default function HomeScreen({navigation, route}: HomeScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  primaryButton: {marginTop: 20},
-  secundaryButton: {
-    marginTop: 20,
-  },
-  appletop: {
-    marginTop: 20,
-  },
+  primaryButton: {marginTop: 50, height: 40},
 });

@@ -6,7 +6,6 @@ import {
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList, AppNavigationContainerProps} from './types';
 import HomeScreen from '@screen/HomeScreen';
-import MenuScreen from '@screen/MenuScreen';
 import {StatusBar} from 'react-native';
 const RootNavigator = createNativeStackNavigator<RootStackParamList>();
 
@@ -38,7 +37,6 @@ export default function AppNavigationContainer(
           initialRouteName={'Home'}>
           <RootNavigator.Group>
             <RootNavigator.Screen name="Home" component={HomeScreen} />
-            <RootNavigator.Screen name="Menu" component={MenuScreen} />
           </RootNavigator.Group>
         </RootNavigator.Navigator>
       </NavigationContainer>
