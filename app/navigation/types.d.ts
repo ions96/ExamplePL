@@ -2,7 +2,6 @@ import {NavigationContainerProps as NavigationContainerProps} from '@react-navig
 
 export type RootStackParamList = {
   Home: undefined;
-  Menu: undefined;
 };
 
 export type AppNavigationContainerProps = Omit<

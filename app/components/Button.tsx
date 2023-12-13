@@ -15,6 +15,7 @@ export default function Button({title, disabled, ...props}: Props) {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
+      disabled={disabled}
       style={disabled ? styles.containerdisabled : styles.container}
       {...props}>
       <Text

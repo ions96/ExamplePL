@@ -12,6 +12,16 @@ import Box from '@component/Box';
 import Text from '@component/Text';
 import ProgressFastImage from '@component/ProgressFastImage';
 import ProfileIcon from '@icons/ProfileIcon';
+import KeyIcon from '@icons/KeyIcon';
+import RegionIcon from '@icons/RegionIcon';
+import NotifyIcon from '@icons/NotifyIcon';
+import PrivacyIcon from '@icons/PrivacyIcon';
+import ApperanceIcon from '@icons/ApperanceIcon';
+import ChatIcon from '@icons/ChatIcon';
+import ThermsIcon from '@icons/ThermsIcon';
+import PolicyIcon from '@icons/PolicyIcon';
+import VersionIcon from '@icons/VersionIcon';
+import LogOutIcon from '@icons/LogOutIcon';
 import {useTheme} from '@theme';
 import {useTranslation} from 'react-i18next';
 import SectionTitle from '@component/SectionTitle';
@@ -55,50 +65,46 @@ const BottomMenuModal = forwardRef<BottomSheet, Props>(
         backdropComponent={renderBackdrop}>
         <Box flex={1} backgroundColor="white">
           <HeaderModal title={'Profile'} onPressClose={onPressClose} />
-          <Box
-            paddingHorizontal={'md'}
-            paddingTop={'lg'}
-            flexDirection={'row'}
-            alignItems={'center'}>
-            <ProgressFastImage
-              source={require('@images/photoprofil.png')}
-              imageStyle={styles.radiusImage}
-              resizeMode="cover"
-              style={styles.image}
-            />
-            <Box marginLeft={'smn'}>
-              <Text variant="medium22" color={'secundaryblack'}>
-                {t('t_app_teryname')}
-              </Text>
-              <Text variant="regular17" color={'gray'}>
-                {t('t_app_teryemail')}
-              </Text>
-            </Box>
-          </Box>
           <BottomSheetScrollView style={styles.scrollContainer}>
+            <Box paddingTop={'lg'} flexDirection={'row'} alignItems={'center'}>
+              <ProgressFastImage
+                source={require('@images/photoprofil.png')}
+                imageStyle={styles.radiusImage}
+                resizeMode="cover"
+                style={styles.image}
+              />
+              <Box marginLeft={'smn'}>
+                <Text variant="medium22" color={'secundaryblack'}>
+                  {t('t_app_teryname')}
+                </Text>
+                <Text variant="regular17" color={'gray'}>
+                  {t('t_app_teryemail')}
+                </Text>
+              </Box>
+            </Box>
             <SectionTitle title={t('t_app_menu_section_profile')} />
             <ListItem
-              title={t('t_app_casahub_mortage')}
+              title={t('t_app_menu_nameandemail')}
               Icon={ProfileIcon}
               onPress={onPressApply}
             />
-            <ListItem
-              title={t('t_app_casahub_mortage')}
-              Icon={ProfileIcon}
-              onPress={onPressApply}
-            />
+            <ListItem title={t('t_app_passwpord')} Icon={KeyIcon} />
             <SectionTitle title={t('t_app_menu_section_preferences')} />
-            <ListItem
-              title={t('t_app_casahub_mortage')}
-              Icon={ProfileIcon}
-              onPress={onPressApply}
-            />
+            <ListItem title={t('t_app_time_region')} Icon={RegionIcon} />
+            <ListItem title={t('t_app_notify')} Icon={NotifyIcon} />
+            <ListItem title={t('t_app_time_privacy')} Icon={PrivacyIcon} />
+            <ListItem title={t('t_app_aperance')} Icon={ApperanceIcon} />
             <SectionTitle title={t('t_app_menu_section_more')} />
+            <ListItem title={t('t_app_contact')} Icon={ChatIcon} />
+            <ListItem title={t('t_app_therms')} Icon={ThermsIcon} />
+            <ListItem title={t('t_app_policy')} Icon={PolicyIcon} />
+            <ListItem title={t('t_app_app_version')} Icon={VersionIcon} />
             <ListItem
-              title={t('t_app_casahub_mortage')}
-              Icon={ProfileIcon}
-              onPress={onPressApply}
+              title={t('t_app_app_logout')}
+              Icon={LogOutIcon}
+              isSpecial
             />
+            <Box paddingVertical={'lg'} />
           </BottomSheetScrollView>
         </Box>
       </BottomSheet>
